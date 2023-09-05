@@ -1,0 +1,35 @@
+apply plugin: 'maven-publish'
+
+Properties properties = new Properties()
+try {
+    BufferedReader reader = new BufferedReader(new FileReader(rootProject.file("local.properties")))
+    properties.load(reader)
+    reader.close()
+} catch (IOException e) {
+    e.printStackTrace()
+}
+
+def mavenUrl = properties.getProperty("MAVEN_URL", "http://localhost:8081/repository/maven-releases/")
+def userName = properties.getProperty("USER_NAME", "admin")
+def passwords = properties.getProperty("PASSWORD", "admin")
+
+afterEvaluate {
+    publishing {
+        publications {
+            plugin(MavenPublication) {
+                groupId = GROUP
+                artifactId = ARTIFACT_ID
+                version = VERSION
+            }
+        }
+        repositories {
+            maven {
+                url = "${mavenUrl}"
+                credentials {
+                    username = "${userName}"
+                    password = "${passwords}"
+                }
+            }
+        }
+    }
+}

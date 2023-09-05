@@ -1,0 +1,13 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    api "com.google.auto.service:auto-service:1.0"
+    annotationProcessor "com.google.auto.service:auto-service:1.0"
+    api 'com.squareup:javawriter:2.5.0'
+    compileOnly project(":base")
+}
+
+// 此写法可忽略文件夹层级带来的影响
+apply from: "${rootProject.rootDir}/maven.gradle"

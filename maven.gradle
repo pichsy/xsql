@@ -1,35 +1,134 @@
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
-Properties properties = new Properties()
-try {
-    BufferedReader reader = new BufferedReader(new FileReader(rootProject.file("local.properties")))
-    properties.load(reader)
-    reader.close()
-} catch (IOException e) {
-    e.printStackTrace()
+//Properties properties = new Properties()
+//try {
+//    BufferedReader reader = new BufferedReader(new FileReader(rootProject.file("local.properties")))
+//    properties.load(reader)
+//    reader.close()
+//} catch (IOException e) {
+//    e.printStackTrace()
+//}
+
+//def mavenUrl = properties.getProperty("MAVEN_URL", "http://localhost:8081/repository/maven-releases/")
+//def userName = properties.getProperty("USER_NAME", "admin")
+//def passwords = properties.getProperty("PASSWORD", "admin")
+
+//tasks.register('androidSourcesJar', Jar) {
+//    classifier = 'sources'
+//    from android.sourceSets.main.java.source
+//}
+
+ext["signing.keyId"] = ''
+ext["signing.password"] = ''
+ext["signing.secretKeyRingFile"] = ''
+ext["ossrhUsername"] = ''
+ext["ossrhPassword"] = ''
+
+File secretPropsFile = project.rootProject.file('local.properties')
+if (secretPropsFile.exists()) {
+    println "输出 local.properties"
+    Properties p = new Properties()
+    p.load(new FileInputStream(secretPropsFile))
+    p.each { name, value ->
+        ext[name] = value
+        println("输出 local.properties name = $name value = $value")
+    }
+} else {
+    println "No props file, loading env vars"
 }
 
-def mavenUrl = properties.getProperty("MAVEN_URL", "http://localhost:8081/repository/maven-releases/")
-def userName = properties.getProperty("USER_NAME", "admin")
-def passwords = properties.getProperty("PASSWORD", "admin")
+//打包main目录下代码和资源的 task
+tasks.register('generateSourcesJar', Jar) {
+    from "${projectDir}/src/main/java"
+    classifier 'sources'
+}
 
-afterEvaluate {
-    publishing {
-        publications {
-            plugin(MavenPublication) {
-                groupId = GROUP
-                artifactId = ARTIFACT_ID
-                version = VERSION
+def artifactFilePath="${buildDir}/${PUBLISH_FILE_NAME}"
+def sourceFilePath="${buildDir}/libs/${project.name}-sources.jar"
+
+
+publishing {
+    publications {
+        release(MavenPublication) {
+
+            groupId PUBLISH_GROUP_ID
+            artifactId PUBLISH_ARTIFACT_ID
+            version PUBLISH_VERSION
+            // 将源码打包到maven仓库
+//            artifact sourceFilePath
+
+            afterEvaluate{
+                artifact(artifactFilePath)
+            }
+            artifact generateSourcesJar
+
+            // Self-explanatory metadata for the most part
+            pom {
+                name = PUBLISH_ARTIFACT_ID
+                description = POM_LICENSE_URL
+                // If your project has a dedicated site, use its URL here
+                url = POM_URL
+                licenses {
+                    license {
+                        //协议类型，一般默认Apache License2.0的话不用改：
+                        name = POM_LICENSE_NAME
+                        url = POM_LICENSE_URL
+                    }
+                }
+                developers {
+                    developer {
+                        id = POM_DEVELOPER_ID
+                        name = POM_DEVELOPER_NAME
+                        email = POM_DEVELOPER_EMAIL
+                    }
+                }
+                // Version control info, if you're using GitHub, follow the format as seen here
+                scm {
+                    //修改成你的Git地址：
+                    connection = POM_SCM_CONNECTION
+                    developerConnection = POM_SCM_DEV_CONNECTION
+                    //分支地址：
+                    url = POM_SCM_URL
+                }
+                // A slightly hacky fix so that your POM will include any transitive dependencies
+                // that your library builds upon
+//                withXml {
+//                    def dependenciesNode = asNode().appendNode('dependencies')
+//
+//                    project.configurations.implementation.allDependencies.each {
+//                        def dependencyNode = dependenciesNode.appendNode('dependency')
+//                        dependencyNode.appendNode('groupId', it.group)
+//                        dependencyNode.appendNode('artifactId', it.name)
+//                        dependencyNode.appendNode('version', it.version)
+//                    }
+//                }
             }
         }
-        repositories {
-            maven {
-                url = "${mavenUrl}"
-                credentials {
-                    username = "${userName}"
-                    password = "${passwords}"
-                }
+    }
+    repositories {
+        // The repository to publish to, Sonatype/MavenCentral
+        maven {
+            // This is an arbitrary name, you may also use "mavencentral" or
+            // any other name that's descriptive for you
+            name = "xsql"
+
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            // You only need this if you want to publish snapshots, otherwise just set the URL
+            // to the release repo directly
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            // The username and password we've fetched earlier
+            credentials {
+                username ossrhUsername
+                password ossrhPassword
             }
         }
     }
 }
+
+signing {
+    sign publishing.publications
+}
+

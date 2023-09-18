@@ -20,13 +20,27 @@ android {
 }
 
 dependencies {
-    compileOnly project(":base")
-
     compileOnly 'androidx.core:core-ktx:1.9.0'
     compileOnly 'androidx.appcompat:appcompat:1.6.1'
     compileOnly 'com.google.android.material:material:1.8.0'
     compileOnly 'androidx.annotation:annotation:1.6.0'
 }
+
+tasks.register('makeJar', Copy) {
+    //删除存在的
+//    delete 'build/libs/core.jar'
+    //设置拷贝的文件
+    from('build/intermediates/aar_main_jar/release/')
+    //打进jar包后的文件目录
+    into('build/libs/')
+    //将classes.jar放入build/libs/目录下
+    //include ,exclude参数来设置过滤
+    include('classes.jar')
+    //重命名
+    rename('classes.jar', 'core.jar')
+}
+
+makeJar.dependsOn(build)
 
 // 此写法可忽略文件夹层级带来的影响
 apply from: "${rootProject.rootDir}/maven.gradle"

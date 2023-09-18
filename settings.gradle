@@ -1,5 +1,8 @@
 pluginManagement {
     repositories {
+        mavenLocal{
+            url '/Users/pichs/.m2/repository'
+        }
         maven {
             credentials {
                 username '62fa2685aaa5896cee9e1174'
@@ -28,6 +31,7 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
         google()
         mavenCentral()
+
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/public' }
     }
@@ -36,5 +40,4 @@ dependencyResolutionManagement {
 rootProject.name = "xsql"
 include ':app'
 include ':core'
-include ':base'
 include ':compiler'

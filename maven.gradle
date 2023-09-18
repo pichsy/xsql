@@ -44,9 +44,7 @@ tasks.register('generateSourcesJar', Jar) {
     classifier 'sources'
 }
 
-def artifactFilePath="${buildDir}/${PUBLISH_FILE_NAME}"
-def sourceFilePath="${buildDir}/libs/${project.name}-sources.jar"
-
+def artifactFilePath = "${buildDir}/${PUBLISH_FILE_NAME}"
 
 publishing {
     publications {
@@ -58,7 +56,7 @@ publishing {
             // 将源码打包到maven仓库
 //            artifact sourceFilePath
 
-            afterEvaluate{
+            afterEvaluate {
                 artifact(artifactFilePath)
             }
             artifact generateSourcesJar
@@ -93,16 +91,16 @@ publishing {
                 }
                 // A slightly hacky fix so that your POM will include any transitive dependencies
                 // that your library builds upon
-//                withXml {
-//                    def dependenciesNode = asNode().appendNode('dependencies')
-//
-//                    project.configurations.implementation.allDependencies.each {
-//                        def dependencyNode = dependenciesNode.appendNode('dependency')
-//                        dependencyNode.appendNode('groupId', it.group)
-//                        dependencyNode.appendNode('artifactId', it.name)
-//                        dependencyNode.appendNode('version', it.version)
-//                    }
-//                }
+                withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+                    project.configurations.implementation.allDependencies.each {
+                        println("MavenallDependencies:${it},group:${it.group},name:${it.name},version:${it.version}")
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', PUBLISH_VERSION)
+                    }
+                }
             }
         }
     }
@@ -113,8 +111,8 @@ publishing {
             // any other name that's descriptive for you
             name = "xsql"
 
-            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
             // You only need this if you want to publish snapshots, otherwise just set the URL
             // to the release repo directly
             url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl

@@ -5,14 +5,16 @@
 可自动升级，无需操心数据库升级带来的困扰，面对对像数据库操作
 
 
-最新版本：[![](https://jitpack.io/v/com.gitee.pichs/xsql.svg)](https://jitpack.io/#com.gitee.pichs/xsql)
+最新版本：[![](https://img.shields.io/maven-central/v/io.github.pichsy.xsql/core)](https://img.shields.io/maven-central/v/io.github.pichsy.xsql/core)
 
 ### 引用方式
 
-        // 核心包 其中已经包含xsql-base，可以不用重复引用
-        implementation 'com.gitee.pichs:xsql:2.0'
-        // 表字段映射类自动生成，可选
-        kapt 'com.gitee.pichs:xsql:compiler:2.0'
+        // 核心包 必须
+         api "io.github.pichsy.xsql:base:2.0.0"
+         api "io.github.pichsy.xsql:core:2.0.0"
+         // 非必须，建议引用，条件查询会非常方便
+         kapt "io.github.pichsy.xsql:compiler:2.0.0"
+
 
 ### 一、 一行代码，无需创建乱七八槽的 dao
 

@@ -5,8 +5,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.FIELD)
+/**
+ * 是否唯一键注解，只能用在字段上
+ * value = true 表示唯一键
+ * value = false 表示不是唯一键
+ */
 @Retention(RetentionPolicy.RUNTIME)
-public @interface XSqlPrimaryKey {
+@Target(ElementType.FIELD)
+public @interface XSqlUnique {
     boolean value() default true;
 }

@@ -30,9 +30,6 @@ android {
 }
 
 dependencies {
-    implementation project(":core")
-    implementation project(":base")
-    kapt project(":compiler")
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
@@ -51,4 +48,12 @@ dependencies {
     // 消息总线通信
     api 'io.github.jeremyliao:live-event-bus-x:1.8.0'
 
+
+    implementation project(":core")
+    kapt project(":compiler")
+
+
+//    implementation "io.github.pichsy.xsql:base:2.0.1"
+//    implementation "io.github.pichsy.xsql:core:2.0.1"
+//    kapt "io.github.pichsy.xsql:compiler:2.0.1"
 }

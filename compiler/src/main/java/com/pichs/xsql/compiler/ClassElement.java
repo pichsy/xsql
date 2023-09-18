@@ -25,32 +25,39 @@ public class ClassElement {
     private List<FieldElement> mFieldElements;
 
     public ClassElement(TypeElement typeElement) {
-        this.typeElement = typeElement;
-        mFieldElements = new ArrayList<>();
-        className = typeElement.getSimpleName().toString();
-       annTableName = typeElement.getAnnotation(XSqlTable.class).value();
-        XSqlProcessor.print("annTableName: " + annTableName);
-        XSqlProcessor.print("className: " + className);
+        try {
+            this.typeElement = typeElement;
+            mFieldElements = new ArrayList<>();
+            className = typeElement.getSimpleName().toString();
 
-        List<? extends Element> enclosedElements = typeElement.getEnclosedElements();
-        if (enclosedElements != null) {
-            for (Element element : enclosedElements) {
-                if (element.getKind() == ElementKind.FIELD) {
-                    VariableElement varElement = (VariableElement) element;
-                    XSqlField sqlField = varElement.getAnnotation(XSqlField.class);
-                    if (sqlField != null) {
-                        String fieldAnnName = sqlField.value();
-                        if (!"".equals(fieldAnnName)) {
-                            FieldElement fieldElement = new FieldElement(varElement, fieldAnnName);
-                            mFieldElements.add(fieldElement);
-                            XSqlProcessor.print("增加了一个FieldElement: " + fieldElement.getFieldName());
+//            Class<?> tableClass = Class.forName("com.pichs.xsql.annotation.XSqlTable");
 
+            annTableName = typeElement.getAnnotation(XSqlTable.class).value();
+            XSqlProcessor.print("annTableName: " + annTableName);
+            XSqlProcessor.print("className: " + className);
+
+            List<? extends Element> enclosedElements = typeElement.getEnclosedElements();
+            if (enclosedElements != null) {
+                for (Element element : enclosedElements) {
+                    if (element.getKind() == ElementKind.FIELD) {
+                        VariableElement varElement = (VariableElement) element;
+                        XSqlField sqlField = varElement.getAnnotation(XSqlField.class);
+                        if (sqlField != null) {
+                            String fieldAnnName = sqlField.value();
+                            if (!"".equals(fieldAnnName)) {
+                                FieldElement fieldElement = new FieldElement(varElement, fieldAnnName);
+                                mFieldElements.add(fieldElement);
+                                XSqlProcessor.print("增加了一个FieldElement: " + fieldElement.getFieldName());
+
+                            }
                         }
                     }
                 }
             }
+            XSqlProcessor.print("mFieldElements: size :  " + mFieldElements.size());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        XSqlProcessor.print("mFieldElements: size :  " + mFieldElements.size());
     }
 
     public String getClassName() {

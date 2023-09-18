@@ -18,6 +18,9 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
+/**
+ * 生成类
+ */
 @AutoService(Processor.class)
 public class XSqlProcessor extends AbstractProcessor {
 
@@ -27,6 +30,10 @@ public class XSqlProcessor extends AbstractProcessor {
     private static Messager mMessager;
     private ClassBuilder classBuilder;
 
+    /**
+     * init
+     * @param processingEnv processingEnv
+     */
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
@@ -36,12 +43,21 @@ public class XSqlProcessor extends AbstractProcessor {
         mMessager = processingEnv.getMessager();
     }
 
+
+    /**
+     * getSupportedOptions
+     * @return Set
+     */
     @Override
     public Set<String> getSupportedOptions() {
         return super.getSupportedOptions();
     }
 
-
+    /**
+     * getSupportedAnnotationTypes
+     *
+     * @return Set
+     */
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> set = new HashSet<>();
@@ -49,11 +65,22 @@ public class XSqlProcessor extends AbstractProcessor {
         return set;
     }
 
+    /**
+     * getSupportedSourceVersion
+     * @return SourceVersion
+     */
     @Override
     public SourceVersion getSupportedSourceVersion() {
         return SourceVersion.latestSupported();
     }
 
+    /**
+     * process
+     *
+     * @param annotations annotations
+     * @param roundEnv    roundEnv
+     * @return boolean
+     */
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         print("roundEnvironment.errorRaised(): " + roundEnv.errorRaised());
@@ -72,11 +99,20 @@ public class XSqlProcessor extends AbstractProcessor {
         return false;
     }
 
-
+    /**
+     * print
+     *
+     * @param msg msg
+     */
     public static void error(String msg) {
         mMessager.printMessage(Diagnostic.Kind.ERROR, msg);
     }
 
+    /**
+     * print
+     *
+     * @param msg msg
+     */
     public static void print(String msg) {
         mMessager.printMessage(Diagnostic.Kind.NOTE, msg);
     }

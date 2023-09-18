@@ -53,7 +53,6 @@ dependencies {
     kapt project(":compiler")
 
 
-//    implementation "io.github.pichsy.xsql:base:2.0.1"
-//    implementation "io.github.pichsy.xsql:core:2.0.1"
-//    kapt "io.github.pichsy.xsql:compiler:2.0.1"
+//    implementation "io.github.pichsy.xsql:core:3.0.0"
+//    kapt "io.github.pichsy.xsql:compiler:3.0.0"
 }

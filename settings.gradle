@@ -1,8 +1,8 @@
 pluginManagement {
     repositories {
-        mavenLocal{
-            url '/Users/pichs/.m2/repository'
-        }
+//        mavenLocal{
+//            url '/Users/pichs/.m2/repository'
+//        }
         maven {
             credentials {
                 username '62fa2685aaa5896cee9e1174'

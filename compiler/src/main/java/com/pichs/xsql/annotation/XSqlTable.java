@@ -13,5 +13,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface XSqlTable {
+    /**
+     * 表名
+     * @return 表名
+     */
     String value();
 }

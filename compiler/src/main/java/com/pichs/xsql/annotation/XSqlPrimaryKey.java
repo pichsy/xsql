@@ -11,5 +11,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface XSqlPrimaryKey {
+    /**
+     * 是否唯一键
+     * @return 是否唯一键
+     */
     boolean value() default true;
 }

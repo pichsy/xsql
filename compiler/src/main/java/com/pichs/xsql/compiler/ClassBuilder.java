@@ -20,13 +20,21 @@ import javax.lang.model.element.TypeElement;
  * 生成类
  */
 public class ClassBuilder {
-
+    /**
+     * 生成的类名
+     */
     public static final String rootClassName = "XSqlProperties";
+    /**
+     * 生成的包名
+     */
     public static final String rootPackageName = "com.pichs.xsql.property";
     private List<ClassElement> mClassElements;
     // 包名
     private String qualifiedName;
 
+    /**
+     * @param roundEnvironment 用于获取注解的元素
+     */
     public ClassBuilder(RoundEnvironment roundEnvironment) {
         mClassElements = new ArrayList<>();
         Set<? extends Element> elements = roundEnvironment.getElementsAnnotatedWith(XSqlTable.class);
@@ -46,6 +54,12 @@ public class ClassBuilder {
         }
     }
 
+    /**
+     * 生成类
+     *
+     * @param filer 用于生成java文件
+     * @throws IOException 抛出异常
+     */
     public void builder(Filer filer) throws IOException {
         JavaWriter jw = new JavaWriter(filer.createSourceFile(rootPackageName + "." + rootClassName).openWriter());
         jw.emitPackage(rootPackageName);

@@ -8,5 +8,13 @@ dependencies {
     api 'com.squareup:javawriter:2.5.0'
 }
 
+
+
+task androidJavadocsJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+
 // 此写法可忽略文件夹层级带来的影响
 apply from: "${rootProject.rootDir}/maven.gradle"

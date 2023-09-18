@@ -17,6 +17,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
@@ -26,21 +27,38 @@ dependencies {
     compileOnly 'androidx.annotation:annotation:1.6.0'
 }
 
-tasks.register('makeJar', Copy) {
-    //删除存在的
-//    delete 'build/libs/core.jar'
-    //设置拷贝的文件
-    from('build/intermediates/aar_main_jar/release/')
-    //打进jar包后的文件目录
-    into('build/libs/')
-    //将classes.jar放入build/libs/目录下
-    //include ,exclude参数来设置过滤
-    include('classes.jar')
-    //重命名
-    rename('classes.jar', 'core.jar')
+task javadoc(type: Javadoc) {
+    options.encoding "UTF-8"
+    options.charSet 'UTF-8'
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    options.links("http://docs.oracle.com/javase/7/docs/api/");
+    options.linksOffline "http://d.android.com/reference","${android.sdkDirectory}/docs/reference"
+    exclude '**/BuildConfig.java'
+    exclude '**/R.java'
+    failOnError = false
 }
 
-makeJar.dependsOn(build)
+task androidJavadocsJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+//tasks.register('makeJar', Copy) {
+//    //删除存在的
+////    delete 'build/libs/core.jar'
+//    //设置拷贝的文件
+//    from('build/intermediates/aar_main_jar/release/')
+//    //打进jar包后的文件目录
+//    into('build/libs/')
+//    //将classes.jar放入build/libs/目录下
+//    //include ,exclude参数来设置过滤
+//    include('classes.jar')
+//    //重命名
+//    rename('classes.jar', 'core.jar')
+//}
+//
+//makeJar.dependsOn(build)
+
 
 // 此写法可忽略文件夹层级带来的影响
 apply from: "${rootProject.rootDir}/maven.gradle"

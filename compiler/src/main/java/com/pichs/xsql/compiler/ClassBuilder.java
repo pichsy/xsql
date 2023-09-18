@@ -16,6 +16,9 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 
+/**
+ * 生成类
+ */
 public class ClassBuilder {
 
     public static final String rootClassName = "XSqlProperties";

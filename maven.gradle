@@ -41,6 +41,8 @@ if (secretPropsFile.exists()) {
 //打包main目录下代码和资源的 task
 tasks.register('generateSourcesJar', Jar) {
     from "${projectDir}/src/main/java"
+    exclude "**/R.class"
+    exclude "**/BuildConfig.class"
     classifier 'sources'
 }
 
@@ -60,6 +62,7 @@ publishing {
                 artifact(artifactFilePath)
             }
             artifact generateSourcesJar
+            artifact androidJavadocsJar
 
             // Self-explanatory metadata for the most part
             pom {

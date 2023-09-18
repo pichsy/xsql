@@ -49,10 +49,10 @@ dependencies {
     api 'io.github.jeremyliao:live-event-bus-x:1.8.0'
 
 
-    implementation project(":core")
-    kapt project(":compiler")
+//    implementation project(":core")
+//    kapt project(":compiler")
 
 
-//    implementation "io.github.pichsy.xsql:core:3.0.0"
-//    kapt "io.github.pichsy.xsql:compiler:3.0.0"
+    implementation "io.github.pichsy.xsql:core:3.0.0"
+    kapt "io.github.pichsy.xsql:compiler:3.0.0"
 }

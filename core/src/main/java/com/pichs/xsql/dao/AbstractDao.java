@@ -25,6 +25,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * 数据库操作类
+ * 基础操作类
+ *
+ * @param <T> 实体类
+ */
 public abstract class AbstractDao<T> implements IBaseDao<T> {
     private static final String TAG = "AbstractDao";
     protected String mTableName;

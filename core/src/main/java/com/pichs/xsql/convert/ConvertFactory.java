@@ -5,8 +5,14 @@ import com.pichs.xsql.model.SqlColumnType;
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * 数据库字段类型转换器工厂类
+ */
 public class ConvertFactory {
 
+    /**
+     * 私有构造方法
+     */
     private ConvertFactory() {
     }
 
@@ -40,7 +46,11 @@ public class ConvertFactory {
         return getConverter(fieldClass).getSqlColumnType();
     }
 
-    // 初始化map数据
+    /**
+     * 初始化map数据
+     * <p>
+     * 获取在数据库中的 字段属性类型（integer,text,blob,byte[]）
+     */
     public static final ConcurrentHashMap<String, BaseConverter> mConvertMap;
 
     /**

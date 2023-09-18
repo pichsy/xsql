@@ -13,11 +13,13 @@ import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import java.util.Map;
 
+/**
+ * 数据库工具类
+ */
 public class DataBaseUtil {
     private static final String BLANK_SPACE = " ";
 

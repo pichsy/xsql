@@ -35,6 +35,9 @@ public abstract class AbstractDao<T> implements IBaseDao<T> {
     private static final String TAG = "AbstractDao";
     protected String mTableName;
     private final Object mLock = new Object();
+    /**
+     * 实体类
+     */
     protected Class<T> mEntityClass;
     /**
      * 缓存数据库名字，对应的entry的Field对象
@@ -42,9 +45,18 @@ public abstract class AbstractDao<T> implements IBaseDao<T> {
      * Field：实体对象的属性
      */
     protected ConcurrentHashMap<String, Field> mNameFieldCache;
+    /**
+     * 是否初始化
+     */
     protected boolean isInit = false;
+    /**
+     * 数据库对象
+     */
     protected Database mDatabase;
-    // 字段缓存，自动升级时使用。
+    /**
+     * 数据库所有的字段
+     * 字段缓存，自动升级时使用。
+     */
     protected List<String> allColumnList;
 
     /**
@@ -98,8 +110,18 @@ public abstract class AbstractDao<T> implements IBaseDao<T> {
         return true;
     }
 
+    /**
+     * 自动建表
+     *
+     * @return 是否建表成功
+     */
     protected abstract boolean createTable();
 
+    /**
+     * 自动升级表
+     *
+     * @return 是否升级成功
+     */
     protected abstract boolean upgradeTable();
 
     /**
@@ -339,6 +361,13 @@ public abstract class AbstractDao<T> implements IBaseDao<T> {
         }
     }
 
+    /**
+     * 更新数据
+     *
+     * @param where  条件
+     * @param entity 实体类
+     * @return 更新成功与否 [1 is success, 0 is failed]
+     */
     @Override
     public int update(Where where, T entity) {
         if (!isInit || where == null) {
@@ -414,6 +443,12 @@ public abstract class AbstractDao<T> implements IBaseDao<T> {
         return 0;
     }
 
+    /**
+     * 删除数据
+     *
+     * @param where 条件
+     * @return 是否删除成功 [1 is success, 0 is failed]
+     */
     @Override
     public int delete(Where where) {
         if (!isInit || where == null) {
@@ -455,6 +490,12 @@ public abstract class AbstractDao<T> implements IBaseDao<T> {
     }
 
 
+    /**
+     * 查询数据
+     *
+     * @param entity 实体类
+     * @return 查询数据结果列表
+     */
     @Override
     public List<T> query(T entity) {
         if (!isInit) {
@@ -493,6 +534,9 @@ public abstract class AbstractDao<T> implements IBaseDao<T> {
 
     /**
      * 生成条件sql语句，和 条件对象
+     *
+     * @param entity 实体类
+     * @return Object[0] sql语句，Object[1] 条件对象
      */
     private Object[] makeConditionSql(T entity) {
         if (entity == null) {
@@ -521,6 +565,12 @@ public abstract class AbstractDao<T> implements IBaseDao<T> {
         return objects;
     }
 
+    /**
+     * 查询数据
+     *
+     * @param where 条件
+     * @return 查询数据结果列表
+     */
     @Override
     public List<T> query(Where where) {
         if (!isInit || where == null) {
@@ -615,8 +665,12 @@ public abstract class AbstractDao<T> implements IBaseDao<T> {
         mDatabase.setTransactionSuccessful();
     }
 
-    /*
-     * 插数据
+    /**
+     * 插入数据
+     *
+     * @param bind 绑定的数据
+     * @param stmt 数据库操作对象
+     * @return 是否插入成功 [1 is success, 0 is failed]
      */
     private long insertInsideTx(Object bind, DatabaseStatement stmt) {
         long result = -1;

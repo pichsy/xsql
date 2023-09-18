@@ -22,17 +22,29 @@ public class DBConfig {
     private String dbName;
     private int newVersion;
 
+    /**
+     * setContext
+     *
+     * @param context Context
+     * @return DBConfig
+     */
     public DBConfig setContext(Context context) {
         mContext = context;
         return this;
     }
 
+    /**
+     * getContext
+     *
+     * @return Context
+     */
     public Context getContext() {
         return mContext;
     }
 
     /**
      * 数据库名字，请不要使用 含有 / 的名字。
+     *
      * @param name 请不要使用 含有 / 的名字。
      * @return String
      */
@@ -41,6 +53,11 @@ public class DBConfig {
         return this;
     }
 
+    /**
+     * 数据库名字，请不要使用 含有 / 的名字。
+     *
+     * @return String
+     */
     public String getDbDir() {
         return dbDir;
     }
@@ -48,6 +65,7 @@ public class DBConfig {
     /**
      * dbDir规则
      * 数据库放在data/data/${applicationId}/files/${dbDir}/${dbName}目录下
+     *
      * @param dbDir dbDir应该为 xxx/xxx 或者 xxx 格式。：  / 代表文件目录层级
      */
     public DBConfig setDbDir(String dbDir) {
@@ -57,6 +75,7 @@ public class DBConfig {
 
     /**
      * 版本可以不设置，默认是1，设置了好像也没啥用，补位-待扩展吧。
+     *
      * @param version 1.0
      * @return DBConfig
      */
@@ -67,12 +86,18 @@ public class DBConfig {
 
     /**
      * 数据库名字，请不要使用 含有 / 的名字。
+     *
      * @return String
      */
     public String getDBName() {
         return dbName;
     }
 
+    /**
+     * 版本可以不设置，默认是1，设置了好像也没啥用，补位-待扩展吧。
+     *
+     * @return int
+     */
     public int getVersion() {
         return newVersion;
     }

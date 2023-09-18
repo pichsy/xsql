@@ -14,5 +14,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface XSqlField {
+    /**
+     * 数据库字段名字
+     * @return String
+     */
     String value();
 }

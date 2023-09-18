@@ -21,6 +21,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 数据库操作基类
+ *
+ * @param <T> 实体类
+ */
 public class BaseDao<T> extends AbstractDao<T> {
 
     protected int mOldVersion = 1;
@@ -257,17 +262,29 @@ public class BaseDao<T> extends AbstractDao<T> {
     }
 
 
-    /*
+    /**
      * 数据库帮助类，
      * 用于升级，数据库，和扩展功能。
      */
     class DevOpenHelper extends DatabaseOpenHelper {
 
+        /**
+         * 构造函数
+         *
+         * @param context 上下文
+         * @param name    数据库名字
+         * @param version 数据库版本
+         */
         public DevOpenHelper(Context context, String name, int version) {
             super(context, name, version);
             mNewVersion = version;
         }
 
+        /**
+         * 数据库创建的时候调用
+         *
+         * @param db 数据库对象
+         */
         @Override
         public void onUpgrade(Database db, int oldVersion, int newVersion) {
             super.onUpgrade(db, oldVersion, newVersion);

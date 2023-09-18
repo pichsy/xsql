@@ -13,5 +13,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface XSqlUnique {
+    /**
+     * 是否是唯一键
+     * @return boolean
+     */
     boolean value() default true;
 }

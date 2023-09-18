@@ -5,6 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
 
+/**
+ * 数据库操作接口
+ */
 public class StandardDatabase implements Database {
 
     private final SQLiteDatabase delegate;

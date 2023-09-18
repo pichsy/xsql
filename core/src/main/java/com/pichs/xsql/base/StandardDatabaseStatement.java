@@ -2,6 +2,9 @@ package com.pichs.xsql.base;
 
 import android.database.sqlite.SQLiteStatement;
 
+/**
+ * 数据库操作接口
+ */
 public class StandardDatabaseStatement implements DatabaseStatement {
     private final SQLiteStatement delegate;
 

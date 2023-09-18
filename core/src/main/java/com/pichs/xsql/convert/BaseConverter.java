@@ -4,6 +4,10 @@ import android.database.Cursor;
 
 import com.pichs.xsql.model.SqlColumnType;
 
+/**
+ * 数据库字段类型转换器
+ * @param <T> 泛型
+ */
 public interface BaseConverter<T> {
 
     /**

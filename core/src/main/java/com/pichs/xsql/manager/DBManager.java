@@ -10,6 +10,9 @@ import com.pichs.xsql.dao.IBaseDao;
 
 import java.sql.SQLException;
 
+/**
+ * 数据库管理类
+ */
 public class DBManager {
 
     private static DBManager mInstance;
@@ -17,6 +20,12 @@ public class DBManager {
     private DBConfig mDBConfig;
     private int newVersion = 1;
 
+    /**
+     * 构造函数
+     *
+     * @param context  上下文
+     * @param dbConfig 配置文件
+     */
     public DBManager(Context context, DBConfig dbConfig) {
         dbName = context.getPackageName().replace(".", "-") + ".db";
         if (dbConfig != null) {
@@ -38,7 +47,7 @@ public class DBManager {
      *
      * @param context  上下文
      * @param dbConfig 配置文件
-     * @return DBManager
+     * @return DBManager object
      */
     public static DBManager getInstance(Context context, DBConfig dbConfig) {
         if (mInstance == null) {

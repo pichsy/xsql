@@ -43,22 +43,6 @@ task androidJavadocsJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
-//tasks.register('makeJar', Copy) {
-//    //删除存在的
-////    delete 'build/libs/core.jar'
-//    //设置拷贝的文件
-//    from('build/intermediates/aar_main_jar/release/')
-//    //打进jar包后的文件目录
-//    into('build/libs/')
-//    //将classes.jar放入build/libs/目录下
-//    //include ,exclude参数来设置过滤
-//    include('classes.jar')
-//    //重命名
-//    rename('classes.jar', 'core.jar')
-//}
-//
-//makeJar.dependsOn(build)
-
 
 // 此写法可忽略文件夹层级带来的影响
 apply from: "${rootProject.rootDir}/maven.gradle"

@@ -9,11 +9,10 @@
 
 ### 引用方式
 
-        // 核心包 必须
-         api "io.github.pichsy.xsql:base:2.0.0"
-         api "io.github.pichsy.xsql:core:2.0.0"
+         // 核心包 必须
+         api "io.github.pichsy.xsql:core:3.0.0"
          // 非必须，建议引用，条件查询会非常方便
-         kapt "io.github.pichsy.xsql:compiler:2.0.0"
+         kapt "io.github.pichsy.xsql:compiler:3.0.0"
 
 
 ### 一、 一行代码，无需创建乱七八槽的 dao
